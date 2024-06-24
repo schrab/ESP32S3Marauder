@@ -6,7 +6,7 @@
 # ESP32 Marauder
 A fork for the <b>ESP32-S3-Mini</b> Dev board (16MB flash, 8MB PSRAM on external IC's) and <b>ST7789 320x170</b> IPS SPI Display
   <br><br>
-<p align="center"><img alt="ESP32-S3 Mini DEV board" src="https://github.com/schrab/ESP32S3Marauder/blob/master/pictures/esp32s3mini.jpg?raw=true" width="300"><img alt="ST7789 170x320 SPI LCD" src="https://github.com/schrab/ESP32S3Marauder/blob/master/pictures/st7789spi.jpg?raw=true" width="300"></p>
+<p align="center"><img alt="ESP32-S3 Mini DEV board" src="https://github.com/schrab/ESP32S3Marauder/blob/master/pictures/esp32s3mini.jpg?raw=true" height="500"><img alt="ST7789 170x320 SPI LCD" src="https://github.com/schrab/ESP32S3Marauder/blob/master/pictures/st7789spi.jpg?raw=true" height="500"></p>
 <p align="center">
   <b>A suite of WiFi/Bluetooth offensive and defensive tools for the ESP32</b>
   <br><br>
