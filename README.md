@@ -3,7 +3,7 @@
 <!---[![Build Status](https://travis-ci.com/justcallmekoko/ESP32Marauder.svg?branch=master)](https://travis-ci.com/justcallmekoko/ESP32Marauder)--->
 <!---Shields/Badges https://shields.io/--->
 
-# ESP32 Marauder
+# ESP32S3 Marauder
 A fork for the <b>ESP32-S3-Mini</b> Dev board (16MB flash, 8MB PSRAM on external IC's) and <b>ST7789 320x170</b> IPS SPI Display
   <br><br>
 <p align="center"><img alt="ESP32-S3 Mini DEV board" src="https://github.com/schrab/ESP32S3Marauder/blob/master/pictures/esp32s3mini.jpg?raw=true" height="500"><img alt="ST7789 170x320 SPI LCD" src="https://github.com/schrab/ESP32S3Marauder/blob/master/pictures/st7789spi.jpg?raw=true" height="500"></p>
