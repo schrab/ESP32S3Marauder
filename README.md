@@ -6,7 +6,7 @@
 # ESP32 Marauder
 A fork for the <b>ESP32-S3-Mini</b> Dev board (16MB flash, 8MB PSRAM on external IC's) and <b>ST7789 320x170</b> IPS SPI Display
   <br><br>
-<p align="center"><img alt="Marauder logo" src="https://github.com/justcallmekoko/ESP32Marauder/blob/master/pictures/marauder3L.jpg?raw=true" width="300"></p>
+<p align="center"><img alt="Marauder logo" src="https://github.com/justcallmekoko/ESP32Marauder/blob/master/pictures/esp32s3mini.jpg?raw=true" width="300"><img alt="Marauder logo" src="https://github.com/justcallmekoko/ESP32Marauder/blob/master/pictures/st7789spi.jpg?raw=true" width="300"></p>
 <p align="center">
   <b>A suite of WiFi/Bluetooth offensive and defensive tools for the ESP32</b>
   <br><br>
@@ -20,5 +20,3 @@ Download the [latest release](https://github.com/justcallmekoko/ESP32Marauder/re
 
 Check out the project [wiki](https://github.com/justcallmekoko/ESP32Marauder/wiki) for a full overview of the ESP32 Marauder
 
-# For Sale Now
-You can buy the ESP32 Marauder using [this link](https://www.tindie.com/products/justcallmekoko/esp32-marauder/)
