@@ -208,13 +208,7 @@ void setup()
   backlightOff();
 
   // Draw the title screen
-  /* #ifdef HAS_SCREEN
-    #ifndef MARAUDER_MINI
-      display_obj.drawJpeg("/marauder_mini.jpg", 0 , 0);     // 240 x 320 image
-    #else
-      display_obj.drawJpeg("/marauder_mini.jpg", 0, 0);
-    #endif
-  #endif */
+ 
 
   #ifdef HAS_SCREEN
     #ifndef MARAUDER_MINI
