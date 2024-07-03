@@ -218,9 +218,9 @@ void setup()
 
   #ifdef HAS_SCREEN
     #ifndef MARAUDER_MINI
-      display_obj.tft.drawCentreString("ESP32 Marauder", SCREEN_WIDTH/2, SCREEN_HEIGHT * (1/3), 2);
+      display_obj.tft.drawCentreString("ESP32 Marauder", SCREEN_WIDTH/2, SCREEN_HEIGHT/3, 2);
       display_obj.tft.drawCentreString("JustCallMeKoko", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 2);
-      display_obj.tft.drawCentreString(display_obj.version_number, SCREEN_WIDTH/2, SCREEN_HEIGHT * (2/3), 2);
+      display_obj.tft.drawCentreString(display_obj.version_number, SCREEN_WIDTH/2, SCREEN_HEIGHT/1.5, 2);
     #endif
   
     #ifdef MARAUDER_MINI
