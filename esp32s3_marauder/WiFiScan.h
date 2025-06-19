@@ -122,6 +122,7 @@ extern Settings settings_obj;
 #else
   extern LedInterface led_obj;
 #endif
+extern Buffer eapol_log_buffer;
 
 esp_err_t esp_wifi_80211_tx(wifi_interface_t ifx, const void *buffer, int len, bool en_sys_seq);
 
@@ -288,6 +289,7 @@ class WiFiScan
     bool seen_mac(unsigned char* mac);
     bool mac_cmp(struct mac_addr addr1, struct mac_addr addr2);
     void save_mac(unsigned char* mac);
+    // void logToGPSFile(String latitude, String longitude, uint8_t* mac_address);
     void clearMacHistory();
     void executeWarDrive();
     void executeSourApple();

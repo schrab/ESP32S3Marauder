@@ -18,20 +18,28 @@ Buffer::Buffer(){
 }
 
 void Buffer::createFile(String name, bool is_pcap){
-  int i=0;
   if (is_pcap) {
-    do{
-      #ifdef USE_FFAT
-      fileName = "/"+name+"_"+(String)i+".cap";
-      #else
-      fileName = "/"+name+"_"+(String)i+".pcap";
-      #endif
-      i++;
-    } while(fs->exists(fileName));
+    #ifdef USE_FFAT
+    fileName = "/" + name + ".cap";
+    #else
+    fileName = "/" + name + ".pcap";
+    #endif
   }
   else {
-    do{
-      fileName = "/"+name+"_"+(String)i+".log";
+    fileName = "/" + name + ".log";
+  }
+
+  // If file exists, add number suffix
+  if(fs->exists(fileName)) {
+    int i = 1;
+    String baseFileName = fileName;
+    String ext = is_pcap ? ".pcap" : ".log";
+    #ifdef USE_FFAT
+    ext = is_pcap ? ".cap" : ".log";
+    #endif
+    
+    do {
+      fileName = "/" + name + "_" + String(i) + ext;
       i++;
     } while(fs->exists(fileName));
   }
