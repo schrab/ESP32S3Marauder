@@ -1387,15 +1387,15 @@ void MenuFunctions::RunSetup()
       });
     }
   #endif
-  #ifdef HAS_GPS
-    if (gps_obj.getGpsModuleStatus()) {
-      this->addNodes(&wifiSnifferMenu, "Station Wardrive", TFT_ORANGE, NULL, PROBE_SNIFF, [this]() {
-        display_obj.clearScreen();
-        this->drawStatusBar();
-        wifi_scan_obj.StartScan(WIFI_SCAN_STATION_WAR_DRIVE, TFT_ORANGE); // Station Wardrive
-      });
-    }
-  #endif
+  // #ifdef HAS_GPS
+  //   if (gps_obj.getGpsModuleStatus()) {
+  //     this->addNodes(&wifiSnifferMenu, "Station Wardrive", TFT_ORANGE, NULL, PROBE_SNIFF, [this]() {
+  //       display_obj.clearScreen();
+  //       this->drawStatusBar();
+  //       wifi_scan_obj.StartScan(WIFI_SCAN_STATION_WAR_DRIVE, TFT_ORANGE); // Station Wardrive
+  //     });
+  //   }
+  // #endif
   
     this->addNodes(&wifiSnifferMenu, text_table1[46], TFT_VIOLET, NULL, EAPOL, [this]() {
       display_obj.clearScreen();

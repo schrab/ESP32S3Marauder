@@ -186,7 +186,7 @@ void setup()
 
   Serial.begin(115200);
   Serial.println(rtc.getTime("%A, %B %d %Y %H:%M:%S"));
-  rtc.setTime(00, 20, 4, 27, 6, 2024);  // 27th Jun 2024 4:20:00
+  // rtc.setTime(00, 20, 4, 27, 6, 2024);  // 27th Jun 2024 4:20:00
   //rtc.setTime(1609459200);  // 1st Jan 2021 00:00:00
   //rtc.offset = 7200; // change offset value
 // 2024-6-27 4:20:00
