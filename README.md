@@ -1,6 +1,27 @@
 # ESP32 Marauder
 <b>A fork for the ESP32-S3-Mini dev board (16MB flash, 8MB PSRAM on external IC's)</b>
 
+## ESP32 Marauder v1.2.0 Release Notes
+
+### New Features
+
+#### Marauder v7 Hardware Support
+- Added official support for Marauder v7 hardware
+- Updated TFT display configurations for better compatibility
+- Enhanced build system to handle multiple hardware variants
+
+#### Build System Improvements
+- Updated GitHub Actions workflow for new screen configurations
+- Added support for additional TFT display variants
+- Improved build process for different hardware targets
+
+### Bug Fixes
+- Fixed display initialization for various hardware configurations
+- Improved compatibility with different TFT display modules
+- Resolved build issues with specific hardware combinations
+
+---
+
 ## ESP32 Marauder v1.1.0 Release Notes
 
 ### New Features

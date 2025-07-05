@@ -176,39 +176,39 @@ jobs:
           
       - name: Configure configs.h for Flipper Zero WiFi Dev Board
         run: |
-          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_M5STICKC/  \/\/#define MARAUDER_M5STICKC/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32s3_marauder/configs.h
-          sed -i 's/^  \/\/#define MARAUDER_FLIPPER/  #define MARAUDER_FLIPPER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32s3_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_M5STICKC/  \/\/#define MARAUDER_M5STICKC/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32_marauder/configs.h
+          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32_marauder/configs.h
+          sed -i 's/^  \/\/#define MARAUDER_FLIPPER/  #define MARAUDER_FLIPPER/' esp32_marauder/configs.h
+          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32_marauder/configs.h
                     
       - name: Build Marauder for Flipper Zero WiFi Dev Board
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
-          sketch-names: esp32s3_marauder.ino
+          sketch-names: esp32_marauder.ino
           arduino-board-fqbn: esp32:esp32:esp32s2:PartitionScheme=min_spiffs,FlashSize=4M,PSRAM=enabled
           extra-arduino-cli-args: "--warnings none"
           
       - name: Rename Marauder Flipper bin
         run: |
-          mv ./esp32s3_marauder/build/esp32.esp32.esp32s2/esp32s3_marauder.ino.bin ./esp32s3_marauder/build/esp32.esp32.esp32s2/esp32s3_marauder.flipper.bin
+          mv ./esp32_marauder/build/esp32.esp32.esp32s2/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.esp32s2/esp32_marauder.flipper.bin
           
       - name: Build Marauder for Flipper Zero Multi Board
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
-          sketch-names: esp32s3_marauder.ino
+          sketch-names: esp32_marauder.ino
           arduino-board-fqbn: esp32:esp32:esp32s3:PartitionScheme=min_spiffs,FlashSize=8M,PSRAM=enabled
           extra-arduino-cli-args: "--warnings none"
           
       - name: Rename Marauder Multi Board bin
         run: |
-          mv ./esp32s3_marauder/build/esp32.esp32.esp32s3/esp32s3_marauder.ino.bin ./esp32s3_marauder/build/esp32.esp32.esp32s3/esp32s3_marauder.multiboardS3.bin
+          mv ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.multiboardS3.bin
          
       - name: Configure TFT_eSPI and configs.h for OG Marauder
         run: |
@@ -217,48 +217,48 @@ jobs:
           sed -i 's/^#include <User_Setup_marauder_rev_feather.h>/\/\/#include <User_Setup_marauder_rev_feather.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h          
           sed -i 's/^#include <User_Setup_marauder_mini.h>/\/\/#include <User_Setup_marauder_mini.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
           sed -i 's/^\/\/#include <User_Setup_og_marauder.h>/#include <User_Setup_og_marauder.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
-          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32s3_marauder/configs.h
-          sed -i 's/^  \/\/#define MARAUDER_V4/  #define MARAUDER_V4/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32s3_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32_marauder/configs.h
+          sed -i 's/^  \/\/#define MARAUDER_V4/  #define MARAUDER_V4/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32_marauder/configs.h
+          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32_marauder/configs.h
+          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32_marauder/configs.h
           
       - name: Build Marauder for OG Marauder
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
-          sketch-names: esp32s3_marauder.ino
+          sketch-names: esp32_marauder.ino
           arduino-board-fqbn: esp32:esp32:d32:PartitionScheme=min_spiffs
           extra-arduino-cli-args: "--warnings none"
           
       - name: Rename OG Marauder bin
         run: |
-          mv ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.ino.bin ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.og.bin
+          mv ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.og.bin
           
       - name: Configure TFT_eSPI and configs.h for Marauder v6
         run: |
           sed -i 's/^#include <User_Setup_marauder_rev_feather.h>/\/\/#include <User_Setup_marauder_rev_feather.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
           sed -i 's/^#include <User_Setup_marauder_mini.h>/\/\/#include <User_Setup_marauder_mini.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
           sed -i 's/^\/\/#include <User_Setup_og_marauder.h>/#include <User_Setup_og_marauder.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
-          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32s3_marauder/configs.h
-          sed -i 's/^  \/\/#define MARAUDER_V6/  #define MARAUDER_V6/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32s3_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32_marauder/configs.h
+          sed -i 's/^  \/\/#define MARAUDER_V6/  #define MARAUDER_V6/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32_marauder/configs.h
+          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32_marauder/configs.h
+          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32_marauder/configs.h
           
       #- name: Build Marauder for v6 Marauder with arduino/compile-sketches
       #  uses: arduino/compile-sketches@v1
       #  with:
-      #    sketch-paths: esp32s3_marauder/esp32s3_marauder.ino
+      #    sketch-paths: esp32_marauder/esp32_marauder.ino
       #    cli-compile-flags: |
       #      - --warnings="none"
       #      - --export-binaries
@@ -266,146 +266,146 @@ jobs:
           
       #- name: Show compiled arduino/compile-sketches v6 bin
       #  run: |
-      #    find ~ -name "esp32s3_marauder.ino.bin"
+      #    find ~ -name "esp32_marauder.ino.bin"
           
       #- name: Rename v6_2 Marauder bin
       #  run: |
-      #    mv ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.ino.bin ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.v6_2.bin
+      #    mv ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.v6_2.bin
           
       - name: Build Marauder for v6 Marauder
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
-          sketch-names: esp32s3_marauder.ino
+          sketch-names: esp32_marauder.ino
           arduino-board-fqbn: esp32:esp32:d32:PartitionScheme=min_spiffs
           extra-arduino-cli-args: "--warnings none"
           
       - name: Rename v6 Marauder bin
         run: |
-          mv ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.ino.bin ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.v6.bin
+          mv ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.v6.bin
           
       - name: Configure TFT_eSPI and configs.h for Marauder v6.1
         run: |
-          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32s3_marauder/configs.h
-          sed -i 's/^  \/\/#define MARAUDER_V6_1/  #define MARAUDER_V6_1/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32s3_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32_marauder/configs.h
+          sed -i 's/^  \/\/#define MARAUDER_V6_1/  #define MARAUDER_V6_1/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32_marauder/configs.h
+          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32_marauder/configs.h
+          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32_marauder/configs.h
           
       - name: Build Marauder for v6.1 Marauder
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
-          sketch-names: esp32s3_marauder.ino
+          sketch-names: esp32_marauder.ino
           arduino-board-fqbn: esp32:esp32:d32:PartitionScheme=min_spiffs
           extra-arduino-cli-args: "--warnings none"
           
       - name: Rename v6 Marauder bin
         run: |
-          mv ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.ino.bin ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.v6_1.bin
+          mv ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.v6_1.bin
          
       - name: Configure TFT_eSPI and configs.h for Marauder Kit
         run: |
           sed -i 's/^#include <User_Setup_marauder_mini.h>/\/\/#include <User_Setup_marauder_mini.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
           sed -i 's/^\/\/#include <User_Setup_og_marauder.h>/#include <User_Setup_og_marauder.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
-          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32s3_marauder/configs.h
-          sed -i 's/^  \/\/#define MARAUDER_KIT/  #define MARAUDER_KIT/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32s3_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32_marauder/configs.h
+          sed -i 's/^  \/\/#define MARAUDER_KIT/  #define MARAUDER_KIT/' esp32_marauder/configs.h
+          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32_marauder/configs.h
+          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32_marauder/configs.h
           
       - name: Build Marauder for Marauder Kit
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
-          sketch-names: esp32s3_marauder.ino
+          sketch-names: esp32_marauder.ino
           arduino-board-fqbn: esp32:esp32:d32:PartitionScheme=min_spiffs
           extra-arduino-cli-args: "--warnings none"
           
       - name: Rename Marauder Kit bin
         run: |
-          mv ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.ino.bin ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.kit.bin
+          mv ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.kit.bin
           
       - name: Configure TFT_eSPI and configs.h for Marauder Mini
         run: |
           sed -i 's/^\/\/#include <User_Setup_marauder_mini.h>/#include <User_Setup_marauder_mini.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
           sed -i 's/^#include <User_Setup_og_marauder.h>/\/\/#include <User_Setup_og_marauder.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
-          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32s3_marauder/configs.h
-          sed -i 's/^  \/\/#define MARAUDER_MINI/  #define MARAUDER_MINI/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32s3_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32_marauder/configs.h
+          sed -i 's/^  \/\/#define MARAUDER_MINI/  #define MARAUDER_MINI/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32_marauder/configs.h
+          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32_marauder/configs.h
+          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32_marauder/configs.h
           
       - name: Build Marauder for Marauder Mini
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
-          sketch-names: esp32s3_marauder.ino
+          sketch-names: esp32_marauder.ino
           arduino-board-fqbn: esp32:esp32:d32:PartitionScheme=min_spiffs
           extra-arduino-cli-args: "--warnings none"
           
       - name: Rename Marauder Mini bin
         run: |
-          mv ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.ino.bin ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.mini.bin
+          mv ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.mini.bin
           
       - name: Configure TFT_eSPI and configs.h for ESP32 LDDB
         run: |
-          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32s3_marauder/configs.h
-          sed -i 's/^  \/\/#define ESP32_LDDB/  #define ESP32_LDDB/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32s3_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32_marauder/configs.h
+          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32_marauder/configs.h
+          sed -i 's/^  \/\/#define ESP32_LDDB/  #define ESP32_LDDB/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32_marauder/configs.h
           
       - name: Build Marauder for ESP32 LDDB
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
-          sketch-names: esp32s3_marauder.ino
+          sketch-names: esp32_marauder.ino
           arduino-board-fqbn: esp32:esp32:d32:PartitionScheme=min_spiffs
           extra-arduino-cli-args: "--warnings none"
           
       - name: Rename Marauder ESP32 LDDB bin
         run: |
-          mv ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.ino.bin ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.esp32_lddb.bin
+          mv ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.esp32_lddb.bin
 
       - name: Configure TFT_eSPI and configs.h for Marauder Dev Board Pro
         run: |
-          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32s3_marauder/configs.h
-          sed -i 's/^  \/\/#define MARAUDER_DEV_BOARD_PRO/  #define MARAUDER_DEV_BOARD_PRO/' esp32s3_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32_marauder/configs.h
+          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32_marauder/configs.h
+          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32_marauder/configs.h
+          sed -i 's/^  \/\/#define MARAUDER_DEV_BOARD_PRO/  #define MARAUDER_DEV_BOARD_PRO/' esp32_marauder/configs.h
           
       - name: Build Marauder for Marauder Dev Board Pro
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
-          sketch-names: esp32s3_marauder.ino
+          sketch-names: esp32_marauder.ino
           arduino-board-fqbn: esp32:esp32:d32:PartitionScheme=min_spiffs
           extra-arduino-cli-args: "--warnings none"
           
       - name: Rename Marauder for Marauder Dev Board Pro
         run: |
-          mv ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.ino.bin ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.marauder_dev_board_pro.bin
+          mv ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.marauder_dev_board_pro.bin
           
       - name: Configure TFT_eSPI and configs.h for Marauder M5StickC
         run: |
@@ -413,28 +413,28 @@ jobs:
           find /home/runner/ -name "*TFT_eSPI*"          
           sed -i 's/^#include <User_Setup_marauder_mini.h>/\/\/#include <User_Setup_marauder_mini.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
           sed -i 's/^\/\/#include <User_Setup_marauder_m5stickc.h>/#include <User_Setup_marauder_m5stickc.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
-          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32s3_marauder/configs.h
-          sed -i 's/^  \/\/#define MARAUDER_M5STICKC/  #define MARAUDER_M5STICKC/' esp32s3_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_REV_FEATHER/  \/\/#define MARAUDER_REV_FEATHER/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32_marauder/configs.h
+          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32_marauder/configs.h
+          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32_marauder/configs.h
+          sed -i 's/^  \/\/#define MARAUDER_M5STICKC/  #define MARAUDER_M5STICKC/' esp32_marauder/configs.h
           
       - name: Build Marauder for Marauder M5StickC
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
-          sketch-names: esp32s3_marauder.ino
+          sketch-names: esp32_marauder.ino
           arduino-board-fqbn: esp32:esp32:m5stick-c:PartitionScheme=min_spiffs
           extra-arduino-cli-args: "--warnings none"
           
       - name: Rename Marauder M5StickC bin
         run: |
-          mv ./esp32s3_marauder/build/esp32.esp32.m5stick-c/esp32s3_marauder.ino.bin ./esp32s3_marauder/build/esp32.esp32.m5stick-c/esp32s3_marauder.m5stickc_plus.bin
+          mv ./esp32_marauder/build/esp32.esp32.m5stick-c/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.m5stick-c/esp32_marauder.m5stickc_plus.bin
           
       - name: Configure TFT_eSPI and configs.h for Marauder Rev Feather
         run: |
@@ -443,108 +443,108 @@ jobs:
           sed -i 's/^\/\/#include <User_Setup_marauder_rev_feather.h>/#include <User_Setup_marauder_rev_feather.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
           sed -i 's/^#include <User_Setup_marauder_mini.h>/\/\/#include <User_Setup_marauder_mini.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
           sed -i 's/^#include <User_Setup_marauder_m5stickc.h>/\/\/#include <User_Setup_marauder_m5stickc.h>/' /home/runner/Arduino/libraries/CustomTFT_eSPI/User_Setup_Select.h
-          sed -i 's/^  \/\/#define MARAUDER_REV_FEATHER/  #define MARAUDER_REV_FEATHER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32s3_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_M5STICKC/  \/\/#define MARAUDER_M5STICKC/' esp32s3_marauder/configs.h
+          sed -i 's/^  \/\/#define MARAUDER_REV_FEATHER/  #define MARAUDER_REV_FEATHER/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_MINI/  \/\/#define MARAUDER_MINI/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V4/  \/\/#define MARAUDER_V4/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6/  \/\/#define MARAUDER_V6/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_V6_1/  \/\/#define MARAUDER_V6_1/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_KIT/  \/\/#define MARAUDER_KIT/' esp32_marauder/configs.h
+          sed -i 's/^  #define GENERIC_ESP32/  \/\/#define GENERIC_ESP32/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_FLIPPER/  \/\/#define MARAUDER_FLIPPER/' esp32_marauder/configs.h
+          sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_M5STICKC/  \/\/#define MARAUDER_M5STICKC/' esp32_marauder/configs.h
           
       - name: Build Marauder for Marauder Rev Feather
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
-          sketch-names: esp32s3_marauder.ino
+          sketch-names: esp32_marauder.ino
           arduino-board-fqbn: esp32:esp32:esp32s2:PartitionScheme=min_spiffs,FlashSize=4M,PSRAM=enabled
           extra-arduino-cli-args: "--warnings none"
           
       - name: Rename Marauder Marauder Rev Feather
         run: |
-          mv ./esp32s3_marauder/build/esp32.esp32.esp32s2/esp32s3_marauder.ino.bin ./esp32s3_marauder/build/esp32.esp32.esp32s2/esp32s3_marauder.rev_feather.bin
+          mv ./esp32_marauder/build/esp32.esp32.esp32s2/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.esp32s2/esp32_marauder.rev_feather.bin
 
       - name: Display finished bins
         run: |
-          find ./esp32s3_marauder/build -name "*.bin"
+          find ./esp32_marauder/build -name "*.bin"
           
       - name: 'Upload Flipper Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: esp32s3_marauder.flipper.bin
-          path: ./esp32s3_marauder/build/esp32.esp32.esp32s2/esp32s3_marauder.flipper.bin
+          name: esp32_marauder.flipper.bin
+          path: ./esp32_marauder/build/esp32.esp32.esp32s2/esp32_marauder.flipper.bin
           retention-days: 5
           
       - name: 'Upload MultiboardS3 Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: esp32s3_marauder.multiboardS3.bin
-          path: ./esp32s3_marauder/build/esp32.esp32.esp32s3/esp32s3_marauder.multiboardS3.bin
+          name: esp32_marauder.multiboardS3.bin
+          path: ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.multiboardS3.bin
           retention-days: 5
           
       - name: 'Upload OG Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: esp32s3_marauder.og.bin
-          path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.og.bin
+          name: esp32_marauder.og.bin
+          path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.og.bin
           retention-days: 5
           
       - name: 'Upload v6 Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: esp32s3_marauder.v6.bin
-          path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.v6.bin
+          name: esp32_marauder.v6.bin
+          path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.v6.bin
           retention-days: 5
           
       - name: 'Upload v6_1 Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: esp32s3_marauder.v6_1.bin
-          path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.v6_1.bin
+          name: esp32_marauder.v6_1.bin
+          path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.v6_1.bin
           retention-days: 5
           
       - name: 'Upload Kit Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: esp32s3_marauder.kit.bin
-          path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.kit.bin
+          name: esp32_marauder.kit.bin
+          path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.kit.bin
           retention-days: 5
           
       - name: 'Upload Mini Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: esp32s3_marauder.mini.bin
-          path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.mini.bin
+          name: esp32_marauder.mini.bin
+          path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.mini.bin
           retention-days: 5
           
       - name: 'Upload ESP32 LDDB Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: esp32s3_marauder.mini.bin
-          path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.esp32_lddb.bin
+          name: esp32_marauder.mini.bin
+          path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.esp32_lddb.bin
           retention-days: 5
           
       - name: 'Upload Marauder Dev Board Pro Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: esp32s3_marauder.marauder_dev_board_pro.bin
-          path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.marauder_dev_board_pro.bin
+          name: esp32_marauder.marauder_dev_board_pro.bin
+          path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.marauder_dev_board_pro.bin
           retention-days: 5
           
       - name: 'Upload Marauder M5StickC Plus Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: esp32s3_marauder.m5stickc_plus.bin
-          path: ./esp32s3_marauder/build/esp32.esp32.m5stick-c/esp32s3_marauder.m5stickc_plus.bin
+          name: esp32_marauder.m5stickc_plus.bin
+          path: ./esp32_marauder/build/esp32.esp32.m5stick-c/esp32_marauder.m5stickc_plus.bin
           retention-days: 5
           
       - name: 'Upload Rev Feather Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: esp32s3_marauder.rev_feather.bin
-          path: ./esp32s3_marauder/build/esp32.esp32.esp32s2/esp32s3_marauder.rev_feather.bin
+          name: esp32_marauder.rev_feather.bin
+          path: ./esp32_marauder/build/esp32.esp32.esp32s2/esp32_marauder.rev_feather.bin
           retention-days: 5
           
       - name: Create Release
@@ -566,8 +566,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./esp32s3_marauder/build/esp32.esp32.esp32s2/esp32s3_marauder.flipper.bin
-          asset_name: esp32s3_marauder.flipper.bin
+          asset_path: ./esp32_marauder/build/esp32.esp32.esp32s2/esp32_marauder.flipper.bin
+          asset_name: esp32_marauder.flipper.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'
           
@@ -578,8 +578,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./esp32s3_marauder/build/esp32.esp32.esp32s3/esp32s3_marauder.multiboardS3.bin
-          asset_name: esp32s3_marauder.multiboardS3.bin
+          asset_path: ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.multiboardS3.bin
+          asset_name: esp32_marauder.multiboardS3.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'
           
@@ -590,8 +590,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.og.bin
-          asset_name: esp32s3_marauder.og.bin
+          asset_path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.og.bin
+          asset_name: esp32_marauder.og.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'
           
@@ -602,8 +602,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.v6.bin
-          asset_name: esp32s3_marauder.v6.bin
+          asset_path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.v6.bin
+          asset_name: esp32_marauder.v6.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'
         
@@ -614,8 +614,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.v6_1.bin
-          asset_name: esp32s3_marauder.v6_1.bin
+          asset_path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.v6_1.bin
+          asset_name: esp32_marauder.v6_1.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'
           
@@ -626,8 +626,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.kit.bin
-          asset_name: esp32s3_marauder.kit.bin
+          asset_path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.kit.bin
+          asset_name: esp32_marauder.kit.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'
           
@@ -638,8 +638,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.mini.bin
-          asset_name: esp32s3_marauder.mini.bin
+          asset_path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.mini.bin
+          asset_name: esp32_marauder.mini.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'
           
@@ -650,8 +650,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.esp32_lddb.bin
-          asset_name: esp32s3_marauder.esp32_lddb.bin
+          asset_path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.esp32_lddb.bin
+          asset_name: esp32_marauder.esp32_lddb.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'
           
@@ -662,8 +662,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./esp32s3_marauder/build/esp32.esp32.d32/esp32s3_marauder.marauder_dev_board_pro.bin
-          asset_name: esp32s3_marauder.marauder_dev_board_pro.bin
+          asset_path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.marauder_dev_board_pro.bin
+          asset_name: esp32_marauder.marauder_dev_board_pro.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'
         
@@ -674,8 +674,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./esp32s3_marauder/build/esp32.esp32.m5stick-c/esp32s3_marauder.m5stickc_plus.bin
-          asset_name: esp32s3_marauder.m5stickc_plus.bin
+          asset_path: ./esp32_marauder/build/esp32.esp32.m5stick-c/esp32_marauder.m5stickc_plus.bin
+          asset_name: esp32_marauder.m5stickc_plus.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'
         
@@ -686,7 +686,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./esp32s3_marauder/build/esp32.esp32.esp32s2/esp32s3_marauder.rev_feather.bin
-          asset_name: esp32s3_marauder.rev_feather.bin
+          asset_path: ./esp32_marauder/build/esp32.esp32.esp32s2/esp32_marauder.rev_feather.bin
+          asset_name: esp32_marauder.rev_feather.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'

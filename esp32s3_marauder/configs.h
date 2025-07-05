@@ -12,6 +12,7 @@
   //#define MARAUDER_V4
   //#define MARAUDER_V6
   //#define MARAUDER_V6_1
+  //#define MARAUDER_V7
   //#define MARAUDER_KIT
   //#define GENERIC_ESP32
   //#define MARAUDER_FLIPPER
@@ -22,7 +23,7 @@
   #define ESP32_S3_MINI
   //// END BOARD TARGETS
 
-  #define MARAUDER_VERSION "v1.1.0"
+  #define MARAUDER_VERSION "v1.2.0"
 
   //// HARDWARE NAMES
   #ifdef MARAUDER_M5STICKC
@@ -37,6 +38,8 @@
     #define HARDWARE_NAME "Marauder v6"
   #elif defined(MARAUDER_V6_1)
     #define HARDWARE_NAME "Marauder v6.1"
+  #elif defined(MARAUDER_V7)
+    #define HARDWARE_NAME "Marauder v7"
   #elif defined(MARAUDER_KIT)
     #define HARDWARE_NAME "Marauder Kit"
   #elif defined(MARAUDER_FLIPPER)
