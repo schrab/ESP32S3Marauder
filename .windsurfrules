@@ -16,6 +16,11 @@ WiFi/Bluetooth offensive and defensive testing suite for ESP32-S3
 - Implement RAII for resource management
 - Keep functions small and focused (<50 lines)
 
+
+## Searching
+- Use PowerShell for searching instead of `grep_search`.
+- Example to find "my_function" in all .cpp and .h files: `Get-ChildItem -Path . -Recurse -Include *.cpp,*.h | Select-String -Pattern "my_function"`
+
 ## File System Best Practices
 - Always check SD card mount status before file operations
 - Implement proper file handle management (open/close pairs)
