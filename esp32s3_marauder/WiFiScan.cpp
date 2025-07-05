@@ -3190,6 +3190,9 @@ void WiFiScan::rawSnifferCallback(void* buf, wifi_promiscuous_pkt_type_t type)
     bool found = false;
     uint8_t targ_index = 0;
     AccessPoint targ_ap;
+    
+    // Initialize display string with color code for signal strength mode
+    display_string = ";wht;Signal Strength Mode | ;grn;";
 
     // Check list of APs
     for (int i = 0; i < access_points->size(); i++) {
@@ -3222,27 +3225,37 @@ void WiFiScan::rawSnifferCallback(void* buf, wifi_promiscuous_pkt_type_t type)
     if ((targ_ap.rssi + 5 < snifferPacket->rx_ctrl.rssi) || (snifferPacket->rx_ctrl.rssi + 5 < targ_ap.rssi)) {
       targ_ap.rssi = snifferPacket->rx_ctrl.rssi;
       access_points->set(targ_index, targ_ap);
+      // Update display string with color-coded signal strength info
+      display_string = ";wht;SSID: ;grn;" + (String)access_points->get(targ_index).essid + 
+                      ";wht; | RSSI: ;cyn;" + (String)access_points->get(targ_index).rssi;
+      
+      // Also print to serial for debugging
       Serial.print((String)access_points->get(targ_index).essid + " RSSI: " + (String)access_points->get(targ_index).rssi);
-      display_string = (String)access_points->get(targ_index).essid + " RSSI: " + (String)access_points->get(targ_index).rssi;
     }
     else
       return;
   }
 
   else {
+    // Add color coding to the output
+    char addr[] = "00:00:00:00:00:00";
+    getMAC(addr, snifferPacket->payload, 10);
+    
+    // Build the display string with color codes
+    display_string = ";wht;RSSI: ;cyn;";
+    display_string += snifferPacket->rx_ctrl.rssi;
+    display_string += ";wht; Ch: ;cyn;";
+    display_string += snifferPacket->rx_ctrl.channel;
+    display_string += ";wht; BSSID: ;grn;";
+    display_string += addr;
+
+    // Also print to serial for debugging
     Serial.print("RSSI: ");
     Serial.print(snifferPacket->rx_ctrl.rssi);
     Serial.print(" Ch: ");
     Serial.print(snifferPacket->rx_ctrl.channel);
     Serial.print(" BSSID: ");
-    char addr[] = "00:00:00:00:00:00";
-    getMAC(addr, snifferPacket->payload, 10);
     Serial.print(addr);
-    display_string.concat(text_table4[0]);
-    display_string.concat(snifferPacket->rx_ctrl.rssi);
-
-    display_string.concat(" ");
-    display_string.concat(addr);
   }
 
   int temp_len = display_string.length();
