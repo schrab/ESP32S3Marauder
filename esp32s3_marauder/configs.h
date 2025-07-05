@@ -61,7 +61,7 @@
   #ifdef ESP32_S3_MINI
   
   //#define HAS_BATTERY
-    // #define BOARD_HAS_PSRAM
+    #define BOARD_HAS_PSRAM
     #define HAS_BT
     #define HAS_BUTTONS
     #define HAS_NEOPIXEL_LED
@@ -70,7 +70,7 @@
     #define USE_FFAT
     #define HAS_SD
     #define USE_SD
-    #define HAS_TEMP_SENSOR
+    //#define HAS_TEMP_SENSOR
     #define HAS_GPS
   
   
