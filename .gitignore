@@ -6,3 +6,6 @@ esp32_marauder/.vscode/settings.json
 esp32s3_marauder/00b27c8e8735ed12922a5d2965135ea1608864ae.patch
 esp32s3_marauder/945a3b23666565a902e738e9d8e249a9510c7aa1.patch
 esp32s3_marauder/6657d1daaa1409a1b337f36924a967c7d12b78fa.patch
+esp32s3_marauder/.vscode/settings.json
+esp32s3_marauder/.theia/launch.json
+esp32s3_marauder/.windsurfrules
