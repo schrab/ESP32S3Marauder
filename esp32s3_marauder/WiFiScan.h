@@ -4,6 +4,7 @@
 #define WiFiScan_h
 
 #include "configs.h"
+#include "utils.h"
 
 #include <ArduinoJson.h>
 #include <algorithm>
@@ -62,6 +63,8 @@
 #define WIFI_ATTACK_RICK_ROLL 9
 #define BT_SCAN_ALL 10
 #define BT_SCAN_SKIMMERS 11
+#define BT_SPOOF_AIRTAG 42
+#define BT_SCAN_FLIPPER 43
 #define WIFI_SCAN_ESPRESSIF 12
 #define LV_JOIN_WIFI 13
 #define LV_ADD_SSID 14
@@ -144,14 +147,23 @@ esp_err_t esp_wifi_80211_tx(wifi_interface_t ifx, const void *buffer, int len, b
 };*/
 
 
-struct mac_addr {
-   unsigned char bytes[6];
+// struct mac_addr and struct Station now defined in utils.h
+
+#ifdef HAS_BT
+struct AirTag {
+  uint8_t mac[6];
+  std::vector<uint8_t> payload;
+  size_t payloadSize;
+  bool selected;
 };
 
-struct Station {
+struct Flipper {
   uint8_t mac[6];
   bool selected;
 };
+extern LinkedList<AirTag>* airtags;
+extern LinkedList<Flipper>* flippers;
+#endif
 
 class WiFiScan
 {
@@ -368,6 +380,10 @@ class WiFiScan
     String security_int_to_string(int security_type);
     char* stringToChar(String string);
     void RunSetup();
+#ifdef HAS_BT
+    void clearAirtags();
+    void clearFlippers();
+#endif
     int clearSSIDs();
     int clearAPs();
     int clearStations();
@@ -397,12 +413,9 @@ class WiFiScan
     void main(uint32_t currentTime);
     void StartScan(uint8_t scan_mode, uint16_t color = 0);
     void StopScan(uint8_t scan_mode);
-    const char* generateRandomName();
-
     bool save_serial = false;
     void startPcap(String file_name);
     void startLog(String file_name);
-    String macToString(const Station& station);
     static void getMAC(char *addr, uint8_t* data, uint16_t offset);
     static void pwnSnifferCallback(void* buf, wifi_promiscuous_pkt_type_t type);
     static void beaconSnifferCallback(void* buf, wifi_promiscuous_pkt_type_t type);

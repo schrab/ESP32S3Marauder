@@ -27,6 +27,10 @@ int num_eapol = 0;
 LinkedList<ssid>* ssids;
 LinkedList<AccessPoint>* access_points;
 LinkedList<Station>* stations;
+#ifdef HAS_BT
+LinkedList<AirTag>* airtags;
+LinkedList<Flipper>* flippers;
+#endif
 
 extern "C" int ieee80211_raw_frame_sanity_check(int32_t arg, int32_t arg2, int32_t arg3){
     if (arg == 31337)
@@ -55,9 +59,9 @@ extern "C" {
 
     switch (Type) {
       case Microsoft: {
-        
-        const char* Name = this->generateRandomName();
-
+        char randomName[11]; // 10 chars + null terminator
+        generateRandomName(randomName, sizeof(randomName));
+        const char* Name = randomName;
         uint8_t name_len = strlen(Name);
 
         AdvData_Raw = new uint8_t[7 + name_len];
@@ -323,15 +327,13 @@ WiFiScan::WiFiScan()
 {
 }
 
-String WiFiScan::macToString(const Station& station) {
-  char macStr[18]; // 6 pairs of hex digits + 5 colons + null terminator
-  snprintf(macStr, sizeof(macStr), "%02X:%02X:%02X:%02X:%02X:%02X",
-           station.mac[0], station.mac[1], station.mac[2],
-           station.mac[3], station.mac[4], station.mac[5]);
-  return String(macStr);
-}
+// macToString implementation moved to utils.h
 
 void WiFiScan::RunSetup() {
+#ifdef HAS_BT
+    if (!airtags) airtags = new LinkedList<AirTag>();
+    if (!flippers) flippers = new LinkedList<Flipper>();
+#endif
   if (ieee80211_raw_frame_sanity_check(31337, 0, 0) == 1)
     this->wsl_bypass_enabled = true;
   else
@@ -382,6 +384,15 @@ void WiFiScan::RunSetup() {
 
   this->initWiFi(1);
 }
+
+#ifdef HAS_BT
+void WiFiScan::clearAirtags() {
+    if (airtags) airtags->clear();
+}
+void WiFiScan::clearFlippers() {
+    if (flippers) flippers->clear();
+}
+#endif
 
 int WiFiScan::clearStations() {
   int num_cleared = stations->size();
@@ -779,7 +790,9 @@ void WiFiScan::StopScan(uint8_t scan_mode)
   (currentScanMode == BT_ATTACK_GOOGLE_SPAM) ||
   (currentScanMode == BT_SCAN_WAR_DRIVE) ||
   (currentScanMode == BT_SCAN_WAR_DRIVE_CONT) ||
-  (currentScanMode == BT_SCAN_SKIMMERS))
+  (currentScanMode == BT_SCAN_SKIMMERS) ||
+  (currentScanMode == BT_SPOOF_AIRTAG) ||
+  (currentScanMode == BT_SCAN_FLIPPER))
   {
     #ifdef HAS_BT
       this->shutdownBLE();
@@ -1899,31 +1912,14 @@ void WiFiScan::executeSourApple() {
   #endif
 }
 
-const char* WiFiScan::generateRandomName() {
-  const char* charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  int len = rand() % 10 + 1; // Generate a random length between 1 and 10
-  char* randomName = (char*)malloc((len + 1) * sizeof(char)); // Allocate memory for the random name
-  for (int i = 0; i < len; ++i) {
-    randomName[i] = charset[rand() % strlen(charset)]; // Select random characters from the charset
-  }
-  randomName[len] = '\0'; // Null-terminate the string
-  return randomName;
-}
-
-void WiFiScan::generateRandomMac(uint8_t* mac) {
-  // Set the locally administered bit and unicast bit for the first byte
-  mac[0] = 0x02; // The locally administered bit is the second least significant bit
-
-  // Generate the rest of the MAC address
-  for (int i = 1; i < 6; i++) {
-    mac[i] = random(0, 255);
-  }
-}
+// generateRandomName implementation moved to utils.h
+// generateRandomMac implementation moved to utils.h
 
 void WiFiScan::executeSwiftpairSpam(EBLEPayloadType type) {
   #ifdef HAS_BT
     uint8_t macAddr[6];
-    generateRandomMac(macAddr);
+    // Use the global generateRandomMac from utils.h
+    ::generateRandomMac(macAddr);
 
     esp_base_mac_addr_set(macAddr);
 

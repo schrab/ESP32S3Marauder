@@ -847,8 +847,34 @@ void CommandLine::runCommand(String input) {
     }
 
     //// Bluetooth scan/attack commands
+    // AirTag Spoofing
+    if (cmd_args.get(0) == BT_AIRTAG_CMD) {
+      #ifdef HAS_BT
+        Serial.println("Starting AirTag spoofing. Stop with " + (String)STOPSCAN_CMD);
+        #ifdef HAS_SCREEN
+          display_obj.clearScreen();
+          menu_function_obj.drawStatusBar();
+        #endif
+        wifi_scan_obj.StartScan(BT_SPOOF_AIRTAG, TFT_CYAN);
+      #else
+        Serial.println("Bluetooth not supported");
+      #endif
+    }
+    // FlipperZero Spoofing
+    else if (cmd_args.get(0) == BT_FLIPPER_CMD) {
+      #ifdef HAS_BT
+        Serial.println("Starting FlipperZero spoofing. Stop with " + (String)STOPSCAN_CMD);
+        #ifdef HAS_SCREEN
+          display_obj.clearScreen();
+          menu_function_obj.drawStatusBar();
+        #endif
+        wifi_scan_obj.StartScan(BT_SCAN_FLIPPER, TFT_ORANGE);
+      #else
+        Serial.println("Bluetooth not supported");
+      #endif
+    }
     // Bluetooth scan
-    if (cmd_args.get(0) == BT_SNIFF_CMD) {
+    else if (cmd_args.get(0) == BT_SNIFF_CMD) {
       #ifdef HAS_BT
         Serial.println("Starting Bluetooth scan. Stop with " + (String)STOPSCAN_CMD);
         #ifdef HAS_SCREEN

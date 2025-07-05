@@ -163,6 +163,8 @@ class MenuFunctions
     // Bluetooth menu stuff
     Menu bluetoothSnifferMenu;
     Menu bluetoothAttackMenu;
+    Menu airtagMenu;
+    Menu flipperMenu;
 
     // Settings things menus
     Menu generateSSIDsMenu;

@@ -22,7 +22,7 @@
   #define ESP32_S3_MINI
   //// END BOARD TARGETS
 
-  #define MARAUDER_VERSION "v1.0.0"
+  #define MARAUDER_VERSION "v1.1.0"
 
   //// HARDWARE NAMES
   #ifdef MARAUDER_M5STICKC

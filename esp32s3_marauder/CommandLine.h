@@ -11,6 +11,7 @@
 #endif 
 
 #include "WiFiScan.h"
+#include "utils.h"
 //#include "Web.h"
 #ifdef HAS_SD
   #include "SDInterface.h"
@@ -83,13 +84,12 @@ const char PROGMEM LOAD_CMD[] = "load";
 // Bluetooth sniff/scan
 const char PROGMEM BT_SPAM_CMD[] = "blespam";
 const char PROGMEM BT_SNIFF_CMD[] = "sniffbt";
-//const char PROGMEM BT_SOUR_APPLE_CMD[] = "sourapple";
-//const char PROGMEM BT_SWIFTPAIR_SPAM_CMD[] = "swiftpair";
-//const char PROGMEM BT_SAMSUNG_SPAM_CMD[] = "samsungblespam";
-//onst char PROGMEM BT_SPAM_ALL_CMD[] = "btspamall";
+const char PROGMEM BT_AIRTAG_CMD[] = "airtagspoof";
+const char PROGMEM BT_FLIPPER_CMD[] = "flipperspoof";
+const char PROGMEM BT_AIRTAG_SPOOF_CMD[] = "airtagspoof";
+const char PROGMEM BT_FLIPPER_SPOOF_CMD[] = "flipperspoof";
 const char PROGMEM BT_WARDRIVE_CMD[] = "btwardrive";
 const char PROGMEM BT_SKIM_CMD[] = "sniffskim";
-
 
 //// Command help messages
 // Admin
@@ -136,6 +136,8 @@ const char PROGMEM HELP_LOAD_CMD[] = "load -a/-s";
 // Bluetooth sniff/scan
 const char PROGMEM HELP_BT_SNIFF_CMD[] = "sniffbt";
 const char PROGMEM HELP_BT_SPAM_CMD[] = "blespam -t <apple/google/samsung/windows/all>";
+const char PROGMEM HELP_BT_AIRTAG_CMD[] = "airtagspoof - Start AirTag spoofing";
+const char PROGMEM HELP_BT_FLIPPER_CMD[] = "flipperspoof - Start FlipperZero spoofing";
 //const char PROGMEM HELP_BT_SOUR_APPLE_CMD[] = "sourapple";
 //const char PROGMEM HELP_BT_SWIFTPAIR_SPAM_CMD[] = "swiftpair";
 //const char PROGMEM HELP_BT_SAMSUNG_SPAM_CMD[] = "samsungblespam";

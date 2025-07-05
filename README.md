@@ -1,6 +1,63 @@
 # ESP32 Marauder
 <b>A fork for the ESP32-S3-Mini dev board (16MB flash, 8MB PSRAM on external IC's)</b>
 
+## ESP32 Marauder v1.1.0 Release Notes
+
+### New Features
+
+#### Bluetooth Enhancements
+- **AirTag Spoofing**: Added support for emulating Apple AirTags
+- **FlipperZero Spoofing**: Added support for emulating FlipperZero devices
+- **Bluetooth Spam**: Enhanced spam functionality with multiple device types
+  - Apple devices
+  - Google devices
+  - Samsung devices
+  - Windows devices
+  - FlipperZero
+
+#### Command Line Interface
+- New command: `sniffbt` - Bluetooth sniffing with AirTag/FlipperZero support
+- New command: `blespam` - Enhanced Bluetooth device spam
+- New command: `spoofat` - AirTag spoofing interface
+- Improved help text and command documentation
+
+#### User Interface
+- New menu icons for Bluetooth operations
+- Improved status display during Bluetooth operations
+- Enhanced error handling and user feedback
+- Streamlined menu navigation
+
+#### Utility Functions
+- Moved common functions to `utils.h` for better code organization
+- Added `macToString` for consistent MAC address formatting
+- Added `generateRandomName` for device name generation
+- Added `generateRandomMac` for MAC address generation
+
+### Bug Fixes
+- Fixed Bluetooth scan/stop functionality
+- Improved memory management
+- Enhanced error handling for Bluetooth operations
+- Fixed menu navigation issues
+
+### How to Use New Features
+
+#### AirTag/FlipperZero Spoofing
+1. Navigate to `Bluetooth` > `Attacks` > `AirTag Spoof` or `FlipperZero Spoof`
+2. Select `Start Spoofing` to begin
+3. Press the **center button** to stop and return to the menu
+
+#### Bluetooth Spam
+1. Use the menu: `Bluetooth` > `Attacks` > `BLE Spam`
+2. Select target device type
+3. Or use command line: `blespam -t <device_type>`
+
+#### Command Line Examples
+```
+sniffbt -t airtag    # Start AirTag sniffing
+blespam -t google    # Spam Google devices
+spoofat -t 1        # Spoof AirTag with index 1
+```
+
 ## Development Plan
 
 ### Current Status
@@ -84,7 +141,24 @@ EAPOL Wardriving allows capturing WPA handshakes while moving, with GPS coordina
 2. Insert SD card
 3. Start EAPOL scan from the menu
 4. Logs will be saved to the SD card with timestamps and GPS data
-  <br><br>
+
+### Bluetooth Spoofing Features
+
+#### AirTag & FlipperZero Spoofing
+
+**New in v1.1.0:**
+- Added support for AirTag and FlipperZero Bluetooth spoofing
+- Menu-based control for starting/stopping spoofing operations
+- Center button can now be used to exit spoofing modes and return to the menu
+
+**How to use:**
+1. Navigate to `Bluetooth` > `Attacks` > `AirTag Spoof` or `FlipperZero Spoof`
+2. Select `Start Spoofing` to begin the spoofing operation
+3. Press the **center button** at any time to stop spoofing and return to the menu
+
+**Note:** The spoofing operation can also be stopped via the serial interface using the `stopscan` command.
+
+<br><br>
 <p align="center"><img alt="Marauder logo" src="https://github.com/justcallmekoko/ESP32Marauder/blob/master/pictures/marauder3L.jpg?raw=true" width="300"></p>
 <p align="center">
   <b>A suite of WiFi/Bluetooth offensive and defensive tools for the ESP32</b>

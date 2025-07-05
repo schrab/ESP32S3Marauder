@@ -17,9 +17,10 @@ WiFi/Bluetooth offensive and defensive testing suite for ESP32-S3
 - Keep functions small and focused (<50 lines)
 
 
+
 ## Searching
 - Use PowerShell for searching instead of `grep_search`.
-- Example to find "my_function" in all .cpp and .h files: `Get-ChildItem -Path . -Recurse -Include *.cpp,*.h | Select-String -Pattern "my_function"`
+- Example to find "my_function" in all .cpp and .h files: `Get-ChildItem -Path . -Recurse -Include *.cpp,*.h | Select-String -Pattern "my_function"` only one keyword at a time
 
 ## File System Best Practices
 - Always check SD card mount status before file operations

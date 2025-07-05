@@ -2,6 +2,7 @@
 #include "lang_var.h"
 #include <Arduino.h>
 //#include "icons.h"
+#include "utils.h"
 #include <ESP32Time.h>
 ESP32Time rtc; // offset in seconds GMT+7
 #ifdef HAS_SCREEN
@@ -574,22 +575,26 @@ void MenuFunctions::main(uint32_t currentTime) {
           (wifi_scan_obj.currentScanMode == WIFI_ATTACK_DEAUTH_TARGETED) ||
           (wifi_scan_obj.currentScanMode == WIFI_ATTACK_MIMIC) ||
           (wifi_scan_obj.currentScanMode == WIFI_ATTACK_RICK_ROLL) ||
-          (wifi_scan_obj.currentScanMode == WIFI_ATTACK_BEACON_LIST) ||
-          (wifi_scan_obj.currentScanMode == BT_SCAN_ALL) ||
-          (wifi_scan_obj.currentScanMode == BT_ATTACK_SOUR_APPLE) ||
-          (wifi_scan_obj.currentScanMode == BT_ATTACK_SWIFTPAIR_SPAM) ||
-          (wifi_scan_obj.currentScanMode == BT_ATTACK_SPAM_ALL) ||
-          (wifi_scan_obj.currentScanMode == BT_ATTACK_SAMSUNG_SPAM) ||
-          (wifi_scan_obj.currentScanMode == BT_ATTACK_GOOGLE_SPAM) ||
-          (wifi_scan_obj.currentScanMode == BT_SCAN_WAR_DRIVE) ||
-          (wifi_scan_obj.currentScanMode == BT_SCAN_WAR_DRIVE_CONT) ||
-          (wifi_scan_obj.currentScanMode == BT_SCAN_SKIMMERS))
+          (wifi_scan_obj.currentScanMode == WIFI_ATTACK_BEACON_LIST))
       {
         wifi_scan_obj.StartScan(WIFI_SCAN_OFF);
   
         // If we don't do this, the text and button coordinates will be off
         display_obj.tft.init();
   
+        // Take us back to the menu
+        changeMenu(current_menu);
+      }
+      // Handle Bluetooth scan modes separately
+      else if ((wifi_scan_obj.currentScanMode >= BT_SCAN_ALL) && 
+               (wifi_scan_obj.currentScanMode <= BT_SCAN_SKIMMERS))
+      {
+        // Call StopScan with the current scan mode for proper cleanup
+        wifi_scan_obj.StopScan(wifi_scan_obj.currentScanMode);
+        
+        // If we don't do this, the text and button coordinates will be off
+        display_obj.tft.init();
+        
         // Take us back to the menu
         changeMenu(current_menu);
       }
@@ -1220,6 +1225,14 @@ void MenuFunctions::displaySetting(String key, Menu* menu, int index) {
 // Function to build the menus
 void MenuFunctions::RunSetup()
 {
+#ifdef HAS_BT
+    // AirTag/FlipperZero/BT spoofing menu creation (per v1.1.0 patch)
+    airtagMenu.name = "AirTag Spoof";
+    airtagMenu.list = new LinkedList<MenuNode>();
+    flipperMenu.name = "FlipperZero Spoof";
+    flipperMenu.list = new LinkedList<MenuNode>();
+    // Add menu nodes for spoofing actions as in v1.1.0 patch (details to be filled in next step)
+#endif
   extern LinkedList<AccessPoint>* access_points;
   extern LinkedList<Station>* stations;
 
@@ -1277,6 +1290,28 @@ void MenuFunctions::RunSetup()
   // Bluetooth menu stuff
   bluetoothSnifferMenu.list = new LinkedList<MenuNode>();
   bluetoothAttackMenu.list = new LinkedList<MenuNode>();
+#ifdef HAS_BT
+  airtagMenu.list = new LinkedList<MenuNode>();
+  flipperMenu.list = new LinkedList<MenuNode>();
+  // AirTag spoofing menu
+  this->addNodes(&airtagMenu, text09, TFT_LIGHTGREY, NULL, 0, [this]() {
+    this->changeMenu(&bluetoothAttackMenu);
+  });
+  this->addNodes(&airtagMenu, "Start AirTag Spoof", TFT_CYAN, NULL, BLUETOOTH, [this]() {
+    display_obj.clearScreen();
+    this->drawStatusBar();
+    wifi_scan_obj.StartScan(BT_SPOOF_AIRTAG, TFT_CYAN);
+  });
+  // FlipperZero spoofing menu
+  this->addNodes(&flipperMenu, text09, TFT_LIGHTGREY, NULL, 0, [this]() {
+    this->changeMenu(&bluetoothAttackMenu);
+  });
+  this->addNodes(&flipperMenu, "Start FlipperZero Spoof", TFT_ORANGE, NULL, BLUETOOTH, [this]() {
+    display_obj.clearScreen();
+    this->drawStatusBar();
+    wifi_scan_obj.StartScan(BT_SCAN_FLIPPER, TFT_ORANGE);
+  });
+#endif
 
   // Settings stuff
   generateSSIDsMenu.list = new LinkedList<MenuNode>();
@@ -1680,7 +1715,7 @@ void MenuFunctions::RunSetup()
           for (int x = 0; x < access_points->get(i).stations->size(); x++) {
             int cur_ap_sta = access_points->get(i).stations->get(x);
 
-            this->addNodes(&wifiStationMenu, wifi_scan_obj.macToString(stations->get(cur_ap_sta)), TFT_CYAN, NULL, KEYBOARD_ICO, [this, i, cur_ap_sta, x](){
+            this->addNodes(&wifiStationMenu, macToString(stations->get(cur_ap_sta)), TFT_CYAN, NULL, KEYBOARD_ICO, [this, i, cur_ap_sta, x](){
             Station new_sta = stations->get(cur_ap_sta);
             new_sta.selected = !stations->get(cur_ap_sta).selected;
 
@@ -1782,6 +1817,12 @@ void MenuFunctions::RunSetup()
   });
   this->addNodes(&bluetoothMenu, "Bluetooth Attacks", TFT_RED, NULL, ATTACKS, [this]() {
     this->changeMenu(&bluetoothAttackMenu);
+  });
+  this->addNodes(&bluetoothMenu, "AirTag Spoofing", TFT_CYAN, NULL, BLUETOOTH_SNIFF, [this]() {
+    this->changeMenu(&airtagMenu);
+  });
+  this->addNodes(&bluetoothMenu, "FlipperZero Spoofing", TFT_MAGENTA, NULL, BLUETOOTH_SNIFF, [this]() {
+    this->changeMenu(&flipperMenu);
   });
 
   // Build bluetooth sniffer Menu
