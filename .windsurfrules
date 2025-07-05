@@ -9,88 +9,69 @@ WiFi/Bluetooth offensive and defensive testing suite for ESP32-S3
 - TFT Display and 5-way switch user interface
 
 ## Code Style and Structure
-- Write concise, technical  C++ code with accurate examples
-- Use functional and declarative programming patterns; avoid classes
+- Write concise, technical C++ code with accurate examples
+- Use functional and declarative programming patterns; prefer composition
 - Prefer iteration and modularization over code duplication
-- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError)
+- Use descriptive variable names with auxiliary verbs (e.g., isMounted, hasError)
+- Implement RAII for resource management
+- Keep functions small and focused (<50 lines)
 
-## Tech Stack
-- Arduino IDE / PlatformIO
-- ESP32-S3 DevKit 
-- C++ (Arduino Framework)
-- FreeRTOS
-
-## Naming Conventions
-- Use lowercase with underscores for directories (e.g., network_scanner, attack_modules)
-- Use camelCase for functions and variables (e.g., scanNetworks, deauthAttack)
-- Use PascalCase for classes and structs (e.g., NetworkScanner, AttackConfig)
-- Use UPPER_CASE for constants and macros (e.g., MAX_CLIENTS, SCAN_TIMEOUT)
-- Prefix global variables with 'g_' (e.g., g_scanResults, g_webServer)
-- Use descriptive names for LVGL objects (e.g., mainScreen, statusLabel, scanButton)
-
-## C++ and Arduino Usage
-- Use modern C++ features when available in ESP32 Arduino core
-- Prefer const references for function parameters when appropriate
-- Use explicit type declarations for clarity
-- Use RAII principles for resource management
-- Define clear interfaces between modules
-- Use header guards or #pragma once in header files
-- Implement proper error handling with return codes or exceptions
-
-## ESP32 Specific
-- Use ESP32 Arduino core v2.0.10
-- Implement proper task management with FreeRTOS
-- Handle WiFi modes properly (STA, AP, STA+AP)
-- Implement proper power management
-- Use hardware timers when precise timing is required
-- Handle memory constraints appropriately (especially with LVGL and images)
-- Implement proper exception handling for network operations
-- Use appropriate flash partitioning for different file systems
-
-## State Management
-- Use global state variables with proper synchronization
-- Implement proper state persistence using SPIFFS/FFat
-- Use mutexes for shared resources in multi-threaded environments
-- Implement proper cleanup in setup() and loop() functions
-- Handle LVGL task scheduling properly
-- Synchronize display updates with data changes
-- Use Ticker for periodic state updates
-
-## Syntax and Formatting
-- Use clear and consistent indentation (2 or 4 spaces)
-- Implement proper bracket placement and spacing
-- Use descriptive function and variable names
-- Keep functions focused and single-purpose
-- Use const keyword appropriately
-- Implement proper header file organization
-- Group library includes logically by functionality
-
-## Hardware and Interfaces
-- Document pin assignments and hardware connections
-- Implement proper GPIO configuration
-- Use appropriate pull-up/pull-down resistors
-- Handle hardware initialization properly
-- Consider power consumption and battery life
-- Document TFT display wiring and configuration
-- Pins defined in esp32s3_marauder\configs.h esp32s3_marauder\SDInterface.cpp
+## File System Best Practices
+- Always check SD card mount status before file operations
+- Implement proper file handle management (open/close pairs)
+- Use consistent file naming: `[type]_[timestamp].[ext]`
+- Handle file system errors gracefully with retry logic
+- Close files immediately after use
 
 ## Error Handling
-- Implement proper error checking for WiFi and BLE operations
-- Log errors appropriately using Serial output
-- Provide meaningful error messages for debugging
-- Handle network failures and timeouts gracefully
-- Implement fallback mechanisms for critical operations
-- Use appropriate error codes and status indicators
-- Handle display initialization failures properly
-- Implement proper JSON parsing error handling
-- Handle file system errors appropriately
+- Check all file operation return values
+- Provide meaningful error messages with context
+- Implement proper cleanup in error conditions
+- Use error codes for expected failures
+- Log all critical errors with timestamps
+
+## Debugging
+- Add debug logs for file operations
+- Include file paths in error messages
+- Log memory usage in critical sections
+- Use compile-time debug levels
+- Add debug commands for system status
+
+## Naming Conventions
+- Directories: `lowercase_with_underscores`
+- Functions/Vars: `camelCase`
+- Classes/Structs: `PascalCase`
+- Constants: `UPPER_CASE`
+- Globals: `g_` prefix
+- Boolean: `isX`/`hasX` prefix
+
+## Memory Management
+- Prefer stack allocation
+- Use smart pointers for dynamic allocation
+- Check malloc/calloc return values
+- Implement proper cleanup in destructors
+- Monitor heap fragmentation
+
+## Performance
+- Minimize file operations
+- Use buffered I/O
+- Batch small writes
+- Avoid dynamic allocation in loops
+- Use const references for large objects
+
+## Hardware
+- Document all pin assignments
+- Implement proper power management
+- Handle SD card hot-swapping
+- Monitor power consumption
+- Implement watchdog timer
 
 ## Testing
-
-- Test on actual ESP32-S3 hardware
-- Implement serial debugging and monitoring
-- Test memory usage and performance (especially with LVGL)
-- Implement proper unit tests for utilities
+- Test with different SD cards
+- Verify error recovery
+- Test low-memory conditions
+- Validate file system operations
+- Test power loss scenarios
 
 
 ## Git Usage
