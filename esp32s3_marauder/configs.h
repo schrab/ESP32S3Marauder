@@ -372,18 +372,9 @@
 
    #ifdef ESP32_S3_MINI
       #define SCREEN_CHAR_WIDTH 40
-      //#define TFT_MISO 19
-      #define TFT_MOSI 6
-      #define TFT_SCLK 7
-      #define TFT_CS 5
-      #define TFT_DC 4
-      #define TFT_RST 48
-      #define TFT_BL 45
-      
       #define CHAR_WIDTH 6
       #define SCREEN_BUFFER
-      #define MAX_SCREEN_BUFFER 9
-
+      #define MAX_SCREEN_BUFFER 18
       #define BANNER_TEXT_SIZE 2
 
       #ifndef TFT_WIDTH
@@ -415,6 +406,8 @@
       #define BUTTON_ARRAY_LEN 100
       #define STATUS_BAR_WIDTH 9
       #define LVGL_TICK_PERIOD 6
+
+
 
       #define FRAME_X 100
       #define FRAME_Y 64

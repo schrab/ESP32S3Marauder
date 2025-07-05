@@ -96,29 +96,49 @@ void Display::tftDrawGreenOnOffButton() {
 
 void Display::tftDrawGraphObjects(byte x_scale)
 {
-  //draw the graph objects
-  tft.fillRect(11, 5, x_scale+1, 120, TFT_BLACK); // positive start point
-  tft.fillRect(11, 121, x_scale+1, 119, TFT_BLACK); // negative start point
-  tft.drawFastVLine(10, 5, 230, TFT_WHITE); // y axis
-  tft.drawFastHLine(10, HEIGHT_1 - 1, 310, TFT_WHITE); // x axis
-  tft.setTextColor(TFT_YELLOW); tft.setTextSize(1); // set parameters for y axis labels
-  //tft.setCursor(3, 116); tft.print(midway);  // "0" at center of ya axis
-  tft.setCursor(3, 6); tft.print("+"); // "+' at top of y axis
-  tft.setCursor(3, 228); tft.print("0"); // "-" at bottom of y axis
+  // Adjust graph dimensions for 320x170 display
+  const int16_t graphX = 10;                    // X position
+  const int16_t graphY = 20;                    // Y position (lower to make room for header)
+  const int16_t graphWidth = 300;               // Width of graph area
+  const int16_t graphHeight = 120;              // Height of graph area
+  const int16_t midY = graphY + (graphHeight / 2); // Middle of graph
+  
+  // Clear graph area
+  tft.fillRect(graphX + 1, graphY, graphWidth, graphHeight, TFT_BLACK);
+  
+  // Draw axes
+  tft.drawFastVLine(graphX, graphY, graphHeight, TFT_WHITE); // Y axis
+  tft.drawFastHLine(graphX, midY, graphWidth, TFT_WHITE);    // X axis (centered)
+  
+  // Draw scale markers
+  tft.setTextColor(TFT_YELLOW); 
+  tft.setTextSize(1);
+  tft.setCursor(graphX - 8, graphY + 2); 
+  tft.print("+");  // Top of Y axis
+  tft.setCursor(graphX - 8, midY - 3); 
+  tft.print("0");  // Middle of Y axis
+  tft.setCursor(graphX - 8, graphY + graphHeight - 5); 
+  tft.print("-");  // Bottom of Y axis
 }
 
 void Display::tftDrawEapolColorKey()
 {
-  //Display color key
-  tft.setTextSize(1); tft.setTextColor(TFT_WHITE);
-  tft.fillRect(14, 0, 15, 8, TFT_CYAN); tft.setCursor(30, 0); tft.print(" - EAPOL"); 
+  // Adjust position for 320x170 display
+  tft.setTextSize(1); 
+  tft.setTextColor(TFT_WHITE);
+  tft.fillRect(14, 2, 15, 8, TFT_CYAN); 
+  tft.setCursor(30, 2); 
+  tft.print(" - EAPOL"); 
 }
 
 void Display::tftDrawColorKey()
 {
-  //Display color key
-  tft.setTextSize(1); tft.setTextColor(TFT_WHITE);
-  tft.fillRect(14, 0, 15, 8, TFT_GREEN); tft.setCursor(30, 0); tft.print(" - Beacons"); 
+  // Adjust position for 320x170 display
+  tft.setTextSize(1); 
+  tft.setTextColor(TFT_WHITE);
+  tft.fillRect(14, 2, 15, 8, TFT_GREEN); 
+  tft.setCursor(30, 2); 
+  tft.print(" - Beacons");
   tft.fillRect(14, 8, 15, 8, TFT_RED); tft.setCursor(30, 8); tft.print(" - Deauths");
   tft.fillRect(14, 16, 15, 8, TFT_BLUE); tft.setCursor(30, 16); tft.print(" - Probes");
 }
