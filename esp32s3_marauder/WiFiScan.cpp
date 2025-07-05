@@ -7,17 +7,17 @@
 ESP32Time rtc; // offset in seconds GMT+7
 #endif
 Buffer eapol_log_buffer;
-String getTimestampedFilename(const String& prefix, const String& ext) {
+String getTimestampedFilename(const String& prefix) {
 #ifdef HAS_GPS
     if (gps_obj.getGpsModuleStatus() && gps_obj.getFixStatus()) {
         String dt = gps_obj.getDatetime(); // Format: YYYY-MM-DD HH:MM:SS or similar
         dt.replace(":", "-");
         dt.replace(" ", "_");
-        return prefix + "_" + dt + ext;
+        return prefix + "_" + dt;
     }
 #endif
     // Fallback: use millis if no GPS
-    return prefix + "_" + String(millis()) + ext;
+    return prefix + "_" + String(millis());
 }
 int num_beacon = 0;
 int num_deauth = 0;
@@ -1742,18 +1742,24 @@ void WiFiScan::RunEapolScan(uint8_t scan_mode, uint16_t color)
   
   num_eapol = 0;
 
-  String pcapFile = getTimestampedFilename("eapol", ".pcap");
+  String pcapFile = getTimestampedFilename("eapol") + ".pcap";
   startPcap(pcapFile);
   
-  #ifdef HAS_GPS  // Start GPS log for EAPOL/PMKID scan
-    #ifdef HAS_GPS
+  #ifdef HAS_GPS
     if (gps_obj.getGpsModuleStatus()) {
-        String logFile = getTimestampedFilename("eapolwardrive", ".log");
+        String logFile = getTimestampedFilename("eapol_wardrive") + ".log";
+        #ifdef ESP32_S3_MINI
+        eapol_log_buffer.logOpen(logFile, &SD_MMC, false);
+        #else
         eapol_log_buffer.logOpen(logFile, &SD, false);
-        String header_line = "MAC,Datetime,Latitude,Longitude,Altitude,Accuracy\n";
+        #endif
+        // Use the same format as wardrive
+        String header_line = "WigleWifi-1.4,appRelease=" + (String)MARAUDER_VERSION + 
+                           ",model=ESP32-S3 Mini,release=" + (String)MARAUDER_VERSION + 
+                           ",device=ESP32-S3 Mini,display=SPI TFT,board=ESP32 Marauder,brand=JustCallMeKoko\n" +
+                           "MAC,SSID,AuthMode,FirstSeen,Channel,RSSI,CurrentLatitude,CurrentLongitude,AltitudeMeters,AccuracyMeters,Type\n";
         eapol_log_buffer.append(header_line);
     }
-    #endif
   #else
      return;
   #endif
@@ -2025,7 +2031,7 @@ void WiFiScan::RunBeaconScan(uint8_t scan_mode, uint16_t color)
   else if (scan_mode == WIFI_SCAN_WAR_DRIVE) {
     #ifdef HAS_GPS
       if (gps_obj.getGpsModuleStatus()) {
-        String logFile = getTimestampedFilename("wardrive", ".log");
+        String logFile = getTimestampedFilename("wardrive") + ".log";
         startLog(logFile);
         String header_line = "WigleWifi-1.4,appRelease=" + (String)MARAUDER_VERSION + ",model=ESP32 Marauder,release=" + (String)MARAUDER_VERSION + ",device=ESP32 Marauder,display=SPI TFT,board=ESP32 Marauder,brand=JustCallMeKoko\nMAC,SSID,AuthMode,FirstSeen,Channel,RSSI,CurrentLatitude,CurrentLongitude,AltitudeMeters,AccuracyMeters,Type\n";
         buffer_obj.append(header_line);
@@ -2206,7 +2212,7 @@ void WiFiScan::RunProbeScan(uint8_t scan_mode, uint16_t color)
   else if (scan_mode == WIFI_SCAN_STATION_WAR_DRIVE) {
     #ifdef HAS_GPS
       if (gps_obj.getGpsModuleStatus()) {
-        String logFile = getTimestampedFilename("station_wardrive", ".log");
+        String logFile = getTimestampedFilename("station_wardrive") + ".log";
         startLog(logFile);
         String header_line = "WigleWifi-1.4,appRelease=" + (String)MARAUDER_VERSION + ",model=ESP32-S3 Mini,release=" + (String)MARAUDER_VERSION + ",device=ESP32-S3 Mini,display=SPI TFT,board=ESP32 Marauder,brand=JustCallMeKoko\nMAC,SSID,AuthMode,FirstSeen,Channel,RSSI,CurrentLatitude,CurrentLongitude,AltitudeMeters,AccuracyMeters,Type\n";
         buffer_obj.append(header_line);
@@ -2324,10 +2330,10 @@ void WiFiScan::RunBluetoothScan(uint8_t scan_mode, uint16_t color)
         if (gps_obj.getGpsModuleStatus()) {
           String logFile;
           if (scan_mode == BT_SCAN_WAR_DRIVE) {
-            logFile = getTimestampedFilename("bt_wardrive", ".log");
+            logFile = getTimestampedFilename("bt_wardrive") + ".log";
           }
           else if (scan_mode == BT_SCAN_WAR_DRIVE_CONT) {
-            logFile = getTimestampedFilename("bt_wardrive_cont", ".log");
+            logFile = getTimestampedFilename("bt_wardrive_cont") + ".log";
           }
           eapol_log_buffer.logOpen(logFile, &SD, false);
           String header_line = "MAC,Datetime,Latitude,Longitude,Altitude,Accuracy\n";
@@ -4209,10 +4215,36 @@ void WiFiScan::activeEapolSnifferCallback(void* buf, wifi_promiscuous_pkt_type_t
 
 
 
-  if (( (snifferPacket->payload[30] == 0x88 && snifferPacket->payload[31] == 0x8e)|| ( snifferPacket->payload[32] == 0x88 && snifferPacket->payload[33] == 0x8e) )){
+  if (( (snifferPacket->payload[30] == 0x88 && snifferPacket->payload[31] == 0x8e)|| ( snifferPacket->payload[32] == 0x88 && snifferPacket->payload[33] == 0x8e))){
     num_eapol++;
     Serial.println("Received EAPOL:");
-    // ADD GPS wardrive log
+    
+    // Log in wardrive format
+    #ifdef HAS_GPS
+    if (gps_obj.getGpsModuleStatus() && gps_obj.getFixStatus()) {
+        // Extract MAC address from the packet
+        char mac_addr[18];
+        snprintf(mac_addr, sizeof(mac_addr), "%02X:%02X:%02X:%02X:%02X:%02X",
+                snifferPacket->payload[16], snifferPacket->payload[17],
+                snifferPacket->payload[18], snifferPacket->payload[19],
+                snifferPacket->payload[20], snifferPacket->payload[21]);
+
+        // Create log line in wardrive format
+        String log_line = String(mac_addr) + "," +  // MAC
+                       "," +                      // SSID (empty for EAPOL)
+                       "WPA2," +                  // AuthMode
+                       gps_obj.getDatetime() + "," +  // FirstSeen
+                       String(wifi_scan_obj.set_channel) + "," +  // Channel
+                       String(snifferPacket->rx_ctrl.rssi) + "," +  // RSSI
+                       gps_obj.getLat() + "," +  // CurrentLatitude
+                       gps_obj.getLon() + "," +  // CurrentLongitude
+                       gps_obj.getAlt() + "," +  // AltitudeMeters
+                       gps_obj.getAccuracy() + "," +  // AccuracyMeters
+                       "WIFI\n";  // Type
+
+        eapol_log_buffer.append(log_line);
+    }
+    #endif
   }
 
   buffer_obj.append(snifferPacket, len);

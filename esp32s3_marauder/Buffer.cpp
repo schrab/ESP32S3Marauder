@@ -18,28 +18,48 @@ Buffer::Buffer(){
 }
 
 void Buffer::createFile(String name, bool is_pcap){
-  if (is_pcap) {
-    #ifdef USE_FFAT
-    fileName = "/" + name + ".cap";
-    #else
-    fileName = "/" + name + ".pcap";
-    #endif
-  }
-  else {
-    fileName = "/" + name + ".log";
+  // Check if the name already has an extension
+  bool has_extension = (name.endsWith(".pcap") || name.endsWith(".cap") || name.endsWith(".log"));
+  
+  if (has_extension) {
+    // If name already has an extension, use it as is
+    fileName = "/" + name;
+  } else {
+    // Otherwise, add the appropriate extension
+    if (is_pcap) {
+      #ifdef USE_FFAT
+      fileName = "/" + name + ".cap";
+      #else
+      fileName = "/" + name + ".pcap";
+      #endif
+    } else {
+      fileName = "/" + name + ".log";
+    }
   }
 
-  // If file exists, add number suffix
+  // If file exists, add number suffix before the extension
   if(fs->exists(fileName)) {
     int i = 1;
-    String baseFileName = fileName;
-    String ext = is_pcap ? ".pcap" : ".log";
-    #ifdef USE_FFAT
-    ext = is_pcap ? ".cap" : ".log";
-    #endif
+    String base_name = name;
+    String ext = "";
+    
+    // Extract extension if it exists
+    int last_dot = name.lastIndexOf('.');
+    if (last_dot != -1) {
+      base_name = name.substring(0, last_dot);
+      ext = name.substring(last_dot);
+    } else {
+      // No extension in original name, use default
+      ext = is_pcap ? 
+        #ifdef USE_FFAT
+        ".cap" : ".log";
+        #else
+        ".pcap" : ".log";
+        #endif
+    }
     
     do {
-      fileName = "/" + name + "_" + String(i) + ext;
+      fileName = "/" + base_name + "_" + String(i) + ext;
       i++;
     } while(fs->exists(fileName));
   }
